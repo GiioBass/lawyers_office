@@ -9,4 +9,8 @@ class Status extends Model
 {
 
     protected $primaryKey = 'id';
+
+    public function affair(){
+        return $this->hasMany(Affair::class);
+    }
 }
