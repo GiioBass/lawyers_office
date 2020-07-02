@@ -13,7 +13,7 @@ class LawyerValidation extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,13 @@ class LawyerValidation extends FormRequest
      */
     public function rules()
     {
+
         return [
-            //
+            'id' => 'required',
+            'names' => 'required|string',
+            'last_name' => 'required|string',
+            'document_type_id' => 'required|numeric'
         ];
+
     }
 }
