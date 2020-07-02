@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Document_type;
+use App\Http\Requests\ClientValidation;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -14,7 +16,9 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+
+        $clients = Client::all();
+        return view('Clients/index', compact('clients'));
     }
 
     /**
@@ -24,7 +28,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $docTypes = Document_type::all();
+        return view('Clients/create', compact('docTypes'));
     }
 
     /**
@@ -33,9 +38,16 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientValidation $request)
     {
-        //
+        $client = new Client();
+        $client->id = $request['id'];
+        $client->names = $request['names'];
+        $client->last_name = $request['last_name'];
+        $client->document_type_id = $request['document_type_id'];
+        $client->save();
+
+        return redirect()->route('client.create')->with( 'El cliente fue creado');
     }
 
     /**
@@ -55,9 +67,11 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit($id)
     {
-        //
+        $docTypes = Document_type::all();
+        $client = Client::findOrFail($id);
+        return view('Clients/edit', compact('client', 'docTypes'));
     }
 
     /**
@@ -67,9 +81,15 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $client->names = $request['names'];
+        $client->last_name = $request['last_name'];
+        $client->document_type_id = $request['document_type_id'];
+        $client->save();
+        return redirect()->route('client.index')->with('Cliente Actualizado');
+
     }
 
     /**
@@ -78,8 +98,11 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $client->delete();
+        return redirect()->route('client.index')->with('Cliente Eliminado');
+
     }
 }
