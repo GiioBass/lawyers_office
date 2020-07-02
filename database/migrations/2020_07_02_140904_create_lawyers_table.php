@@ -14,8 +14,14 @@ class CreateLawyersTable extends Migration
     public function up()
     {
         Schema::create('lawyers', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedInteger('id')->unique();
+            $table->string('names', 100);
+            $table->string('last_name', 100);
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->unsignedInteger('document_type_id');
+            $table->foreign('document_type_id')->references('id')->on('document_types');
         });
     }
 

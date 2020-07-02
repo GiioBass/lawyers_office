@@ -14,8 +14,16 @@ class CreateAffairsTable extends Migration
     public function up()
     {
         Schema::create('affairs', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedInteger('id')->unique();
+            $table->string('name', 100);
+            $table->unsignedDouble('cost');
+            $table->date('start');
+            $table->date('finish');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->unsignedInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
         });
     }
 
