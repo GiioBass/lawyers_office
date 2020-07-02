@@ -10,4 +10,14 @@ class Affair extends Model
     use SoftDeletes;
 
     protected $primaryKey = 'id';
+
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
+    public function lawyer(){
+        return $this->belongsToMany(Lawyer::class)->withPivot('affair_id', 'lawyer_id', 'id');
+    }
 }
