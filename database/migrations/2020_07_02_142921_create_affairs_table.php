@@ -17,13 +17,15 @@ class CreateAffairsTable extends Migration
             $table->unsignedInteger('id')->unique();
             $table->string('name', 100);
             $table->unsignedDouble('cost');
-            $table->date('start');
-            $table->date('finish');
+            $table->date('start')->nullable();;
+            $table->date('finish')->nullable();;
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unsignedInteger('client_id');
             $table->unsignedInteger('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('client_id')->references('id')->on('clients');
         });
     }
 
