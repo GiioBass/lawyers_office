@@ -18,6 +18,6 @@ class Affair extends Model
         return $this->belongsTo(Client::class);
     }
     public function lawyer(){
-        return $this->belongsToMany(Lawyer::class)->withPivot('affair_id', 'lawyer_id', 'id');
+        return $this->belongsToMany(Lawyer::class, 'affair_lawyers');
     }
 }

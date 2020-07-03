@@ -18,10 +18,13 @@ class Lawyer extends Model
         'document_type_id'
     ];
 
-    public function document_type(){
+    public function document_type()
+    {
         return $this->belongsTo(Document_type::class);
     }
-    public function affair(){
-        return $this->belongsToMany(Affair::class)->withPivot('affair_id', 'lawyer_id', 'id');
+
+    public function affair()
+    {
+        return $this->belongsToMany(Affair::class, 'affair_lawyers');
     }
 }
