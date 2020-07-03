@@ -6,7 +6,9 @@ use App\Affair;
 use App\Document_type;
 use App\Lawyer;
 use App\Client;
+use App\Status;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Promise\all;
 
 class AffairController extends Controller
 {
@@ -18,10 +20,7 @@ class AffairController extends Controller
     public function index()
     {
         $affairs = Affair::all();
-        $clients = Client::all();
-        $lawyers = Lawyer::all();
-        $docTypes = Document_type::all();
-        return view('Affairs/index', compact('clients', 'lawyers', 'docTypes', 'affairs'));
+        return view('Affairs/index', compact('affairs'));
     }
 
     /**
@@ -31,7 +30,10 @@ class AffairController extends Controller
      */
     public function create()
     {
-        //
+        $client = Client::all();
+        $status = Status::all();
+        $affair = Affair::all();
+        return view('Affairs.create', compact('affair', 'client','status'));
     }
 
     /**
@@ -42,7 +44,17 @@ class AffairController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $affair = new Affair();
+        $affair->id = $request['id'];
+        $affair->name = $request['name'];
+        $affair->cost = $request['cost'];
+        $affair->start = $request['start'];
+        $affair->finish = $request['finish'];
+        $affair->client_id = $request['client_id'];
+        $affair->status_id = $request['status_id'];
+        $affair->save();
+        return redirect()->route('affair.index')->with('Caso creado con éxito');
+
     }
 
     /**
@@ -87,6 +99,8 @@ class AffairController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $affair = Affair::findOrFail($id);
+        $affair->delete();
+        return redirect()->route('affair.index')->with('El caso ha sido archivado');
     }
 }
