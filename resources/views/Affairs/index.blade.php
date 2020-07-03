@@ -20,7 +20,6 @@
                     <th scope="col">Nombre Abogado</th>
                     <th scope="col">Editar</th>
                     <th scope="col">Archivar</th>
-
                 </thead>
                 <tbody>
                 @foreach($affairs as $affair)
@@ -31,16 +30,18 @@
                         <td>{{$affair->start}}</td>
                         <td>{{$affair->update_at}}</td>
                         <td>{{$affair->finish}}</td>
-                        <td>{{$affair->status_id}}</td>
+                        <td>{{$affair->status->name}}</td>
+                        <td>{{$affair->client->names . ' ' . $affair->client->last_name }}</td>
+                        <td>abogado</td>
                         <td>
-{{--                            <a class="btn btn-dark" href="{{route('client.edit', $client->id)}}">Editar</a>--}}
+                            {{--                            <a class="btn btn-dark" href="{{route('client.edit', $client->id)}}">Editar</a>--}}
                         </td>
                         <td>
-                            {{--<form action="{{route('client.destroy', $client->id)}}" method="post">
+                            <form action="{{route('affair.destroy', $affair->id)}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-warning" type="submit">Eliminar</button>
-                            </form>--}}
+                            </form>
                         </td>
                     </tr>
                 @endforeach
