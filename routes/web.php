@@ -2,10 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', function () {
-    return view('Affairs/index');
-})->name('home');
+    return redirect()->route('affair.index');
+});
 
 Route::resource('/client', 'ClientController');
 Route::resource('/lawyer', 'LawyerController');
