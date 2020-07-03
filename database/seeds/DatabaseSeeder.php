@@ -3,6 +3,7 @@
 use App\Affair;
 use App\Client;
 use App\Lawyer;
+use App\Affair_Lawyer;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         factory(Client::class, 40)->create();
         factory(Lawyer::class,10)->create();
         factory(Affair::class, 40)->create();
+        factory(Affair_Lawyer::class, 10)->create();
     }
 }
